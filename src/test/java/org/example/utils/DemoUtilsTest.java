@@ -1,6 +1,9 @@
 package org.example.utils;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.Duration;
 import java.util.List;
@@ -13,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@TestMethodOrder(MethodOrderer.Random.class)
 //@TestMethodOrder(MethodOrderer.MethodName.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(MockitoExtension.class)
 public class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -40,6 +44,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Running test: Equals and Non Equals")
+    @Disabled("Don't run test")
     void testEqualsAndNotEquals() {
 
         System.out.println("Running test: testEqualsAndNotEquals");
@@ -51,6 +56,7 @@ public class DemoUtilsTest {
     @Test
     @DisplayName("Running test: Null and Non Null")
     @Order(3)
+    @EnabledOnOs(OS.LINUX)
     void testEqualsNullOrEqualsNotNull() {
 
         System.out.println("Running test: testEqualsNullOrEqualsNotNull");
@@ -69,6 +75,7 @@ public class DemoUtilsTest {
     @Test
     @DisplayName("Same and not same")
     @Order(-1)
+    @EnabledOnJre(JRE.JAVA_17)
     void test_same_and_not_the_same() {
 
         String someOtherString = "some other string for testing";
@@ -80,6 +87,7 @@ public class DemoUtilsTest {
     @Test
     @DisplayName("True or False")
     @Order(1)
+    @EnabledOnJre(JRE.JAVA_13)
     void test_true_or_false() {
 
         Integer num1 = 50;
@@ -94,6 +102,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Array Equals")
+    @EnabledForJreRange(min = JRE.JAVA_8, max = JRE.JAVA_18)
     void test_array_equals() {
 
 
@@ -107,6 +116,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Iterable Equals")
+    @EnabledOnJre(JRE.JAVA_18)
     void test_iterable_equals() {
 
         System.out.println("Number and order of elements in the collection must be the same, and iterated elements must be equal.");
@@ -120,6 +130,7 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Lines match")
+    @EnabledForJreRange(min = JRE.JAVA_17)
     void test_lines_match() {
 
         System.out.println("Number and order of elements in the collection must be the same, and iterated elements must be equal.");
@@ -162,6 +173,8 @@ public class DemoUtilsTest {
 
     @Test
     @DisplayName("Timeout - assertTimeout ")
+//    @EnabledIfSystemProperties()
+//    @EnabledIfEnvironmentVariable()
     void test_timeout() {
 
         assertTimeout (Duration.ofSeconds(4), () -> {
